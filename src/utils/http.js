@@ -77,9 +77,14 @@ class HttpClient {
 
     let baseUrl = this.baseURL;
 
-    // If API_BASE_URL ends with /api (local proxy case often), and we are requesting /auth, we need to strip /api
-    if (baseUrl.endsWith('/api') && (endpoint.startsWith('/auth') || endpoint.startsWith('/notification'))) {
-      baseUrl = baseUrl.replace(/\/api\/?$/, '');
+    // If endpoint starts with /auth or /notification, forces the full absolute URL
+    // This avoids issues with relative proxy rewrites on Vercel or local
+    if (endpoint.startsWith('/auth') || endpoint.startsWith('/notification')) {
+      baseUrl = 'https://api-fuelabc.onrender.com';
+    }
+    // Otherwise, if using /api proxy and not handled above, standard logic applies
+    else if (baseUrl.endsWith('/api')) {
+      // Regular API calls keep /api/ prefix if base has it, or valid as is
     }
 
     // Ensure no double slashes
