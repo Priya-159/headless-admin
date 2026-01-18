@@ -72,14 +72,31 @@ class HttpClient {
     const token = this.getToken();
 
     // Force using the live backend directly to avoid Vercel rewrite issues
-    let baseUrl = 'https://api-fuelabc.onrender.com';
+    const baseUrl = 'https://api-fuelabc.onrender.com';
 
-    // Ensure no double slashes
-    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-    // If baseUrl ends with /, strip it
-    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+    // Ensure no double slashes in endpoint
+    let cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+
+    // Logic to prepend /api if needed
+    // The backend structure is:
+    // - /auth/ -> Auth
+    // - /notification/ -> Notifications
+    // - /api/ -> Core API
+    // - /ssrapi/ -> RapidAPI
+    // - /route/ -> MMI
+    // If the endpoint doesn't start with any of these known root paths, assume it belongs to /api/
+    if (
+      !cleanEndpoint.startsWith('/auth') &&
+      !cleanEndpoint.startsWith('/notification') &&
+      !cleanEndpoint.startsWith('/api') &&
+      !cleanEndpoint.startsWith('/ssrapi') &&
+      !cleanEndpoint.startsWith('/route')
+    ) {
+      cleanEndpoint = `/api${cleanEndpoint}`;
+    }
 
     // Construct final URL
+    const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
     const url = `${cleanBaseUrl}${cleanEndpoint}`;
 
     console.log(`📡 Requesting: ${options.method || 'GET'} ${url}`);
