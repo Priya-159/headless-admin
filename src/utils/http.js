@@ -1,8 +1,5 @@
-// API Base URL - Update this to your Django backend URL
-const API_BASE_URL = import.meta.env.VITE_API_URL ||
-  (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1'
-    ? '/api'
-    : 'http://127.0.0.1:8000/api');
+// API Base URL - Defaults to /api (handled by Vite proxy locally or Vercel rewrites in prod)
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
 // Development mode - set to True to use mock data when Django is not available
 const USE_MOCK_DATA_ON_ERROR = false;
