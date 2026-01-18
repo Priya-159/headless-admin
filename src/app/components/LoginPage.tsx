@@ -199,11 +199,6 @@ export function LoginPage() {
               transition={{ delay: 0.5 }}
               className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg"
             >
-              <p className="text-sm text-blue-800 font-medium mb-2">Demo Credentials:</p>
-              <div className="text-xs text-blue-600 space-y-1">
-                <p><span className="font-semibold">Username:</span> admin</p>
-                <p><span className="font-semibold">Password:</span> admin123</p>
-              </div>
             </motion.div>
 
             {/* Additional Info */}
