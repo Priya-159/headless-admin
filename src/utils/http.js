@@ -88,7 +88,7 @@ class HttpClient {
     if (
       !cleanEndpoint.startsWith('/auth') &&
       !cleanEndpoint.startsWith('/notification') &&
-      !cleanEndpoint.startsWith('/api') &&
+      !cleanEndpoint.startsWith('/api/') &&
       !cleanEndpoint.startsWith('/ssrapi') &&
       !cleanEndpoint.startsWith('/route')
     ) {
