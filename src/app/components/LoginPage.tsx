@@ -192,15 +192,6 @@ export function LoginPage() {
               </Button>
             </form>
 
-            {/* Demo Credentials Info */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg"
-            >
-            </motion.div>
-
             {/* Additional Info */}
             <div className="mt-6 text-center text-xs text-zinc-500">
               <p>Protected by FuelABC Security</p>
