@@ -77,14 +77,10 @@ class HttpClient {
 
     let baseUrl = this.baseURL;
 
-    // If endpoint starts with /auth or /notification, forces the full absolute URL
-    // This avoids issues with relative proxy rewrites on Vercel or local
-    if (endpoint.startsWith('/auth') || endpoint.startsWith('/notification')) {
+    // Force absolute URL for all backend endpoints
+    // This strictly separates frontend routing (Vercel) from backend data (Render)
+    if (endpoint.startsWith('/auth') || endpoint.startsWith('/notification') || endpoint.startsWith('/api')) {
       baseUrl = 'https://api-fuelabc.onrender.com';
-    }
-    // Otherwise, if using /api proxy and not handled above, standard logic applies
-    else if (baseUrl.endsWith('/api')) {
-      // Regular API calls keep /api/ prefix if base has it, or valid as is
     }
 
     // Ensure no double slashes
