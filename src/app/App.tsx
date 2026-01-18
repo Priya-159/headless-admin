@@ -80,7 +80,7 @@ function AdminPanel() {
                   <Route path="/accounts/states" element={<AccountsDashboard section="states" />} />
                   <Route path="/accounts/subscriptions" element={<AccountsDashboard section="subscriptions" />} />
                   <Route path="/accounts/trip-usages" element={<AccountsDashboard section="trip-usages" />} />
-                  <Route path="/accounts/api-usage" element={<AccountsDashboard section="api-usage" />} />
+                  <Route path="/accounts/api-usage_counts" element={<AccountsDashboard section="api-usage" />} />
                   <Route path="/accounts/admin-controls" element={<AdminControlsPage />} />
                   <Route path="/accounts/emergency-numbers" element={<AccountsDashboard section="emergency-numbers" />} />
                   <Route path="/accounts/free-requests" element={<AccountsDashboard section="free-requests" />} />
