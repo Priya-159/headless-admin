@@ -1,5 +1,5 @@
-// API Base URL - Defaults to /api (handled by Vite proxy locally or Vercel rewrites in prod)
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// API Base URL
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://api-fuelabc.onrender.com';
 
 // Development mode - set to True to use mock data when Django is not available
 const USE_MOCK_DATA_ON_ERROR = false;
@@ -71,11 +71,15 @@ class HttpClient {
   async request(endpoint, options = {}) {
     const token = this.getToken();
 
-    // Determine the base URL
-    // If endpoint starts with /auth or /notification, use the root URL (remove /api suffix if present)
+    // Determine the full URL
+    // API_BASE_URL is now the root (e.g., https://api-fuelabc.onrender.com or /api proxy)
+    // Endpoints passed to this function usually start with / or nothing.
+
     let baseUrl = this.baseURL;
-    if (endpoint.startsWith('/auth') || endpoint.startsWith('/notification')) {
-      baseUrl = this.baseURL.replace(/\/api\/?$/, '');
+
+    // If API_BASE_URL ends with /api (local proxy case often), and we are requesting /auth, we need to strip /api
+    if (baseUrl.endsWith('/api') && (endpoint.startsWith('/auth') || endpoint.startsWith('/notification'))) {
+      baseUrl = baseUrl.replace(/\/api\/?$/, '');
     }
 
     // Ensure no double slashes
