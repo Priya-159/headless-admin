@@ -71,21 +71,15 @@ class HttpClient {
   async request(endpoint, options = {}) {
     const token = this.getToken();
 
-    // Determine the full URL
-    // API_BASE_URL is now the root (e.g., https://api-fuelabc.onrender.com or /api proxy)
-    // Endpoints passed to this function usually start with / or nothing.
-
-    let baseUrl = this.baseURL;
-
-    // Force absolute URL for all backend endpoints
-    // This strictly separates frontend routing (Vercel) from backend data (Render)
-    if (endpoint.startsWith('/auth') || endpoint.startsWith('/notification') || endpoint.startsWith('/api')) {
-      baseUrl = 'https://api-fuelabc.onrender.com';
-    }
+    // Force using the live backend directly to avoid Vercel rewrite issues
+    let baseUrl = 'https://api-fuelabc.onrender.com';
 
     // Ensure no double slashes
     const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    // If baseUrl ends with /, strip it
     const cleanBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+
+    // Construct final URL
     const url = `${cleanBaseUrl}${cleanEndpoint}`;
 
     console.log(`📡 Requesting: ${options.method || 'GET'} ${url}`);
